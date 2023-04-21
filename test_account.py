@@ -39,6 +39,9 @@ class Test:
             self.a1.deposit('one million dollars')
         assert self.a1.get_balance() == 200
 
+        assert self.a1.deposit(100.0) is True
+        assert self.a1.get_balance() == pytest.approx(300, abs=0.001)
+
     def test_withdraw(self):
         assert self.a1.withdraw(100) is True
         assert self.a1.get_balance() == 0
@@ -58,3 +61,7 @@ class Test:
         with pytest.raises(TypeError):
             self.a1.withdraw('a bazillion dollars')
         assert self.a1.get_balance() == 0
+
+        self.a1.deposit(100)
+        assert self.a1.withdraw(100.0) is True
+        assert self.a1.get_balance() == pytest.approx(0, abs=0.001)
